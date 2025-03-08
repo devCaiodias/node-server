@@ -1,6 +1,10 @@
+const fs = require('fs')
+const { getTodosBooks } = require('../servicos/books')
+
 function getBooks(req, res) {
     try {
-        res.send("Olá rapazeada para de graça")
+        const books = getTodosBooks()
+        res.send(books)
 
     }catch (error){
         res.status(500)
