@@ -17,9 +17,15 @@ function getBooks(req, res) {
 function getBook(req, res) {
     try {
         const id = req.params.id
-        const book = getBookForId(id)
-        res.send(book)
-
+        
+        if (id && Number(id)) {
+            const book = getBookForId(id)
+            res.send(book)
+        }
+        else {
+            res.status(422)
+            res.send({error: "Id inválido"})
+        }
     }catch (error){
         res.status(500)
         res.send({error: error.message})
@@ -30,9 +36,14 @@ function getBook(req, res) {
 function postBooks(req, res) {
     try {
         const newBook = req.body
-        addBooksNew(newBook)
-        res.status(201)
-        res.send("Book added")
+        if (req.body.nome && req.body.id) {
+            addBooksNew(newBook)
+            res.status(201)
+            res.send("Book added")
+        } else {
+            res.status(422)
+            res.send({error: "Nome inválido ou id Invalido"})
+        }
 
     } catch (error){
         res.status(500)
@@ -44,9 +55,15 @@ function postBooks(req, res) {
 function patchBooks(req, res) {
     try {
         const id = req.params.id
-        const alterBookss = req.body
-        alterBook(id, alterBookss)
-        res.send("Book altered")
+        if (id && Number(id)) {
+            const alterBookss = req.body
+            alterBook(id, alterBookss)
+            res.send("Book altered")
+        }
+        else {
+            res.status(422)
+            res.send({error: "Id inválido"})
+        }
     } catch (error){
         res.status(500)
         res.send({error: error.message})
@@ -57,9 +74,14 @@ function patchBooks(req, res) {
 function deleteBooks(req, res) {
     try {
         const id = req.params.id
-        deleteBook(id)
-        res.send("Book deleted")
-        
+        if (id && Number(id)) {
+            deleteBook(id)
+            res.send("Book deleted")
+        }
+        else {
+            res.status(422)
+            res.send({error: "Id inválido"})
+        }
     } catch (error){
         res.status(500)
         res.send({error: error.message})
