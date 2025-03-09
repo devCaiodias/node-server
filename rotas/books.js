@@ -1,7 +1,6 @@
 //  Criar rotas para o recurso de livros
 const { Router} = require('express');
-const {getBooks} = require('../controladores/books')
-
+const {getBooks, getBook, postBooks, patchBooks, deleteBooks} = require('../controladores/books')
 const router = Router();
 
 //  req = requisição
@@ -9,20 +8,17 @@ const router = Router();
 // Criando uma rota para o método GET
 router.get("/", getBooks)
 
+// Criando uma rota para o método GET com um parâmetro
+router.get("/:id", getBook)
+
 // Criando uma rota para o método POST
-router.post("/", (req, res) => {
-    res.send("Vc fez uma resquisição POST")
-})
+router.post("/", postBooks)
 
 // Criando uma rota para o método patch
-router.patch("/", (req, res) => {
-    res.send("Vc fez uma resquisição Patch")
-})
+router.patch("/:id", patchBooks)
 
 // Criando uma rota para o método DELETE
-router.delete("/", (req, res) => {
-    res.send("Vc fez uma resquisição Delete")
-})
+router.delete("/:id", deleteBooks)
 
 // extando o router
 module.exports = router
